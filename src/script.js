@@ -49,6 +49,13 @@ function showCityWeather(response) {
   let desciptionElement = document.querySelector('#description')
   desciptionElement.innerHTML = response.data.weather[0].description
 
+  let iconElement = document.querySelector('#icon')
+  iconElement.setAttribute(
+    'src',
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+  )
+  iconElement.setAttribute('alt', response.data.weather[0].description)
+
   console.log(response)
 }
 
@@ -88,6 +95,12 @@ function showWeather(response) {
   let desciptionElement = document.querySelector('#description')
   desciptionElement.innerHTML = response.data.weather[0].description
 
+  let iconElement = document.querySelector('#icon')
+  iconElement.setAttribute(
+    'src',
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+  )
+
   console.log(response)
 }
 function handlePosition(response) {
@@ -103,23 +116,19 @@ function currentInformation(response) {
   navigator.geolocation.getCurrentPosition(handlePosition)
 }
 
-let dateElement = document.querySelector('#date')
-let currentTime = new Date()
-let searchForm = document.querySelector('#search-form')
-
-searchForm.addEventListener('click', search)
-
-dateElement.innerHTML = formatDate(currentTime)
-
-let fahrenheit = document.querySelector('#fahrenheit')
-fahrenheit.addEventListener('click', convertToFahrenheit)
-
-let currentTemperature = document.querySelector('#current-location')
-currentTemperature.addEventListener('click', currentInformation)
-
-let celcius = document.querySelector('#celcius')
-celcius.addEventListener('submit', convertToCelcius)
-
 let apiKey = '8d282729d9e6c12dadd28e197fda8a9a'
 let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 let unit = 'metric'
+let dateElement = document.querySelector('#date')
+let currentTime = new Date()
+let searchForm = document.querySelector('#search-form')
+let fahrenheit = document.querySelector('#fahrenheit')
+let currentTemperature = document.querySelector('#current-location')
+let celcius = document.querySelector('#celcius')
+
+dateElement.innerHTML = formatDate(currentTime)
+
+fahrenheit.addEventListener('click', convertToFahrenheit)
+celcius.addEventListener('submit', convertToCelcius)
+currentTemperature.addEventListener('click', currentInformation)
+searchForm.addEventListener('click', search)
