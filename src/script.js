@@ -121,6 +121,26 @@ function handlePosition(response) {
 function currentInformation(response) {
   navigator.geolocation.getCurrentPosition(handlePosition)
 }
+function displayForecast() {
+  let forecastElement = document.querySelector('#forecast')
+  forecastElement.innerHTML = `<div class="row">
+          <div class="col-2 tempDays">
+            <span class="forecast-days">Monday</span>
+            <br />
+            <img
+              src="https://ssl.gstatic.com/onebox/weather/48/rain_s_cloudy.png"
+              alt=""
+            />
+            <br /> <div class="forecast-temperatures">
+            <span class="temperature-max">
+              19˚ </span>
+            <span class="temperature-min">
+              12˚ </span></div>
+            </div>
+          </div>
+          </div>
+        </div>`
+}
 
 let apiKey = '8d282729d9e6c12dadd28e197fda8a9a'
 let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?'
@@ -139,3 +159,4 @@ fahrenheit.addEventListener('click', convertToFahrenheit)
 celcius.addEventListener('click', convertToCelcius)
 currentTemperature.addEventListener('click', currentInformation)
 searchForm.addEventListener('click', search)
+displayForecast()
