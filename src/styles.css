@@ -12,6 +12,10 @@ a {
 a:hover {
   color: #c54c82;
 }
+.container {
+  max-width: 600px;
+  margin: auto;
+}
 .weatherApp {
   border: 1px solid #f4aeba;
   background: #fdfdcb;
