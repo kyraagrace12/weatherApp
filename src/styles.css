@@ -65,3 +65,16 @@ a:hover {
 .activeNow {
   color: black;
 }
+.weather-forecast {
+  color: #c54c82;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.forecast-temperatures {
+  font-size: 16px;
+}
+.temperature-min {
+  opacity: 0.7;
+}
+.forecast-days {
+  opacity: 0.8;
+}
