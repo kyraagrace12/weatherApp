@@ -10,7 +10,7 @@ a {
   color: #ec729c;
 }
 a:hover {
-  color: #c54c82;
+  cursor: default;
 }
 .container {
   max-width: 600px;
@@ -61,4 +61,7 @@ a:hover {
 }
 .search-btn {
   padding: 0 12px 0 0;
+}
+.activeNow {
+  color: black;
 }

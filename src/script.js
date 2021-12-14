@@ -35,7 +35,7 @@ function showCityWeather(response) {
   let tempElement = document.querySelector('#main-temp')
   let mainTemp = tempElement.innerHTML
   mainTemp = Number(mainTemp)
-  tempElement.innerHTML = Math.round(response.data.main.temp)
+  tempElement.innerHTML = Math.round(celciusTemperature)
 
   let precipitationElement = document.querySelector('#precipitation')
   precipitationElement.innerHTML = response.data.clouds.all
@@ -56,22 +56,27 @@ function showCityWeather(response) {
   )
   iconElement.setAttribute('alt', response.data.weather[0].description)
 
+  celciusTemperature = response.data.main.temp
+
   console.log(response)
 }
 
 function convertToFahrenheit(event) {
   event.preventDefault()
   let tempElement = document.querySelector('#main-temp')
-  let mainTemp = tempElement.innerHTML
-  mainTemp = Number(mainTemp)
-  tempElement.innerHTML = Math.round((mainTemp * 9) / 5 + 32)
+  let fahrenheitTemp = Math.round((celciusTemperature * 9) / 5 + 32)
+  tempElement.innerHTML = fahrenheitTemp
+
+  fahrenheit.classList.add('activeNow')
+  celcius.classList.remove('activeNow')
 }
 function convertToCelcius(event) {
   event.preventDefault()
   let tempElement = document.querySelector('#main-temp')
-  let mainTemp = tempElement.innerHTML
-  mainTemp = Number(mainTemp)
-  tempElement.innerHTML = Math.round(((mainTemp - 32) * 5) / 9)
+  tempElement.innerHTML = Math.round(celciusTemperature)
+
+  fahrenheit.classList.remove('activeNow')
+  celcius.classList.add('activeNow')
 }
 
 function showWeather(response) {
@@ -101,6 +106,7 @@ function showWeather(response) {
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
   )
 
+  celciusTemperature = response.data.main.temp
   console.log(response)
 }
 function handlePosition(response) {
@@ -125,10 +131,11 @@ let searchForm = document.querySelector('#search-form')
 let fahrenheit = document.querySelector('#fahrenheit')
 let currentTemperature = document.querySelector('#current-location')
 let celcius = document.querySelector('#celcius')
+let celciusTemperature = null
 
 dateElement.innerHTML = formatDate(currentTime)
 
 fahrenheit.addEventListener('click', convertToFahrenheit)
-celcius.addEventListener('submit', convertToCelcius)
+celcius.addEventListener('click', convertToCelcius)
 currentTemperature.addEventListener('click', currentInformation)
 searchForm.addEventListener('click', search)
