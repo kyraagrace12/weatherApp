@@ -42,6 +42,8 @@ function showCityWeather(response) {
   let cityElement = document.querySelector('#city')
   cityElement.innerHTML = response.data.name
 
+  celciusTemperature = response.data.main.temp
+
   let tempElement = document.querySelector('#main-temp')
   let mainTemp = tempElement.innerHTML
   mainTemp = Number(mainTemp)
@@ -66,8 +68,6 @@ function showCityWeather(response) {
   )
   iconElement.setAttribute('alt', response.data.weather[0].description)
 
-  celciusTemperature = response.data.main.temp
-
   getForecast(response.data.coord)
 }
 
@@ -90,6 +90,10 @@ function convertToCelcius(event) {
 }
 
 function showWeather(response) {
+  console.log(response)
+
+  celciusTemperature = response.data.main.temp
+
   let tempElement = document.querySelector('#main-temp')
   let mainTemp = tempElement.innerHTML
   mainTemp = Number(mainTemp)
@@ -115,9 +119,7 @@ function showWeather(response) {
     'src',
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
   )
-
-  celciusTemperature = response.data.main.temp
-  console.log(response)
+  getForecast(response.data.coord)
 }
 function handlePosition(response) {
   let lat = response.coords.latitude
@@ -128,31 +130,52 @@ function handlePosition(response) {
     .then(showWeather)
 }
 
-function currentInformation(response) {
+function currentInformation(event) {
+  event.preventDefault()
   navigator.geolocation.getCurrentPosition(handlePosition)
 }
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000)
+  let day = date.getDay()
+  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+  return days[day]
+}
+
 function displayForecast(response) {
-  console.log(response.data)
+  let forecast = response.data.daily
+  console.log(response.data.daily)
+
   let forecastElement = document.querySelector('#forecast')
-  forecastElement.innerHTML = `<div class="row">
+
+  let forecastHTML = `<div class="row">`
+
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 6) {
+      forecastHTML =
+        forecastHTML +
+        `
           <div class="col-2 tempDays">
-            <span class="forecast-days">Monday</span>
+            <span class="forecast-days">${formatDay(forecastDay.dt)}</span>
             <br />
             <img
-              src="https://ssl.gstatic.com/onebox/weather/48/rain_s_cloudy.png"
+              src=
+    http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png
               alt=""
             />
             <br /> <div class="forecast-temperatures">
             <span class="temperature-max">
-              19˚ </span>
+              ${Math.round(forecastDay.temp.max)}˚ </span>
             <span class="temperature-min">
-              12˚ </span></div>
-            </div>
-          </div>
-          </div>
-        </div>`
+              ${Math.round(forecastDay.temp.min)}˚ </span>
+              </div>
+            </div>`
+    }
+  })
+  forecastHTML = forecastHTML + `</div>`
+  forecastElement.innerHTML = forecastHTML
 }
-
 let apiKey = '8d282729d9e6c12dadd28e197fda8a9a'
 let apiUrl = 'https://api.openweathermap.org/data/2.5/weather?'
 let unit = 'metric'
