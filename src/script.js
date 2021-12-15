@@ -28,6 +28,16 @@ function search(event) {
     .then(showCityWeather)
 }
 
+function getForecast(coordinates) {
+  console.log(coordinates)
+  let lat = coordinates.lat
+  let lon = coordinates.lon
+  let apiKey = '8d282729d9e6c12dadd28e197fda8a9a'
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+  console.log(apiUrl)
+  axios.get(apiUrl).then(displayForecast)
+}
+
 function showCityWeather(response) {
   let cityElement = document.querySelector('#city')
   cityElement.innerHTML = response.data.name
@@ -58,7 +68,7 @@ function showCityWeather(response) {
 
   celciusTemperature = response.data.main.temp
 
-  console.log(response)
+  getForecast(response.data.coord)
 }
 
 function convertToFahrenheit(event) {
@@ -121,7 +131,8 @@ function handlePosition(response) {
 function currentInformation(response) {
   navigator.geolocation.getCurrentPosition(handlePosition)
 }
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data)
   let forecastElement = document.querySelector('#forecast')
   forecastElement.innerHTML = `<div class="row">
           <div class="col-2 tempDays">
@@ -159,4 +170,3 @@ fahrenheit.addEventListener('click', convertToFahrenheit)
 celcius.addEventListener('click', convertToCelcius)
 currentTemperature.addEventListener('click', currentInformation)
 searchForm.addEventListener('click', search)
-displayForecast()
