@@ -23,6 +23,8 @@ function search(event) {
   event.preventDefault()
   let cityInput = document.querySelector('#city-input')
 
+  fahrenheit.classList.remove('activeNow')
+  celcius.classList.add('activeNow')
   axios
     .get(`${apiUrl}q=${cityInput.value}&units=${unit}&appid=${apiKey}`)
     .then(showCityWeather)
@@ -133,6 +135,9 @@ function handlePosition(response) {
 
 function currentInformation(event) {
   event.preventDefault()
+
+  fahrenheit.classList.remove('activeNow')
+  celcius.classList.add('activeNow')
   navigator.geolocation.getCurrentPosition(handlePosition)
 }
 
