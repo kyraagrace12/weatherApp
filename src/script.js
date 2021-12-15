@@ -17,7 +17,7 @@ function formatDate(date) {
     'Friday',
     'Saturday',
   ]
-  return `${days[day]} ${hours}:${minutes}`
+  return `Last updated: ${days[day]} ${hours}:${minutes}`
 }
 function search(event) {
   event.preventDefault()
@@ -39,6 +39,7 @@ function getForecast(coordinates) {
 }
 
 function showCityWeather(response) {
+  console.log(response)
   let cityElement = document.querySelector('#city')
   cityElement.innerHTML = response.data.name
 
@@ -49,8 +50,8 @@ function showCityWeather(response) {
   mainTemp = Number(mainTemp)
   tempElement.innerHTML = Math.round(celciusTemperature)
 
-  let precipitationElement = document.querySelector('#precipitation')
-  precipitationElement.innerHTML = response.data.clouds.all
+  let feelsLikeElement = document.querySelector('#feels_like')
+  feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like)
 
   let humidityElement = document.querySelector('#humidity')
   humidityElement.innerHTML = response.data.main.humidity
@@ -102,8 +103,8 @@ function showWeather(response) {
   let cityElement = document.querySelector('#city')
   cityElement.innerHTML = response.data.name
 
-  let precipitationElement = document.querySelector('#precipitation')
-  precipitationElement.innerHTML = response.data.clouds.all
+  let feelsLikeElement = document.querySelector('#feels_like')
+  feelsLikeElement.innerHTML = Math.round(response.data.main.feels_like)
 
   let humidityElement = document.querySelector('#humidity')
   humidityElement.innerHTML = response.data.main.humidity
@@ -138,7 +139,15 @@ function currentInformation(event) {
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000)
   let day = date.getDay()
-  let days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  let days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]
 
   return days[day]
 }
@@ -159,7 +168,7 @@ function displayForecast(response) {
           <div class="col-2 tempDays">
             <span class="forecast-days">${formatDay(forecastDay.dt)}</span>
             <br />
-            <img
+            <img class="forecast-img"
               src=
     http://openweathermap.org/img/wn/${forecastDay.weather[0].icon}@2x.png
               alt=""

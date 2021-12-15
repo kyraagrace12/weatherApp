@@ -18,25 +18,29 @@ a:hover {
 }
 .weatherApp {
   border: 1px solid #f4aeba;
-  background: #fdfdcb;
+  background: linear-gradient(to top, #dfe9f3 0%, white 100%);
   border-radius: 4px;
   padding: 20px;
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
 }
 .tempDays {
   margin: auto;
-  border: 1px solid #f4aeba;
-  border-radius: 4px;
   padding: 0;
   text-align: center;
+  background: linear-gradient(
+    68.6deg,
+    rgb(252, 165, 241) 1.8%,
+    rgb(181, 255, 255) 100.5%
+  );
+  border-radius: 20px;
 }
 #main-temp {
   font-size: 50px;
 }
 .weather-image-main {
   padding-bottom: 20px;
-  height: 80px;
+  height: 100px;
 }
 .units {
   position: relative;
@@ -77,4 +81,8 @@ a:hover {
 }
 .forecast-days {
   opacity: 0.8;
+  font-size: 16px;
+}
+.forecast-img {
+  max-width: 93px;
 }
